@@ -3,33 +3,27 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    gap: 10px;
+
     width: 100%;
-    margin-top: 40px;
+    margin: 40px 0;
     img{
         width: 50px;
         object-fit: cover;
     }
 
     h1{
-        color: #3FA4DD;
-        font-size: 2rem;
-        font-weight: 600;
+        color: #19376D;
         text-transform: uppercase;
-        letter-spacing: 4px;
+        letter-spacing: 3px;
         text-align: center;
         margin: 0;
-        font-size: 15px;
-        font-weight: 600;
+        font-size: 16px;
+        font-weight: bold;
     }
 
     @media screen and (min-width: 768px){
+        gap: 10px;
         flex-direction: row;
-
-        img{
-            width: 60px;
-            margin-right: 20px;
-        }
         h1{
             font-size: 23px;
         }
@@ -37,9 +31,6 @@
     }
 
     @media screen and (min-width: 1024px){
-        img{
-            width: 80px;
-        }
         h1{
             font-size: 25px;
         }

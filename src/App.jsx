@@ -1,10 +1,12 @@
 import {useState, useEffect} from 'react'
 import { Button } from './components/Button/Button'
 import Header from './components/Header/Header'
-import './index.css'
 import useFetch from './hooks/useFetch'
 import cliente from './utils/clients'
 import clienteActualizado from './utils/clienteActualizado'
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import './index.scss'
 
 function App() {
   // Ingresar
@@ -14,7 +16,6 @@ function App() {
   };
   const url = 'https://api.softix.app/api';
   const {auth} = useFetch(`${url}/cuenta/login`, token);
-  // console.log(auth.token)
 
   // listar los usuarios
   const [clientes, setClientes] = useState(null);
@@ -32,13 +33,11 @@ function App() {
         .then(data => setClientes(data))
     }
   }, [auth])
-  // console.log(clientes)
 
   // Crear un cliente 
   const [mensaje, setMensaje] = useState("");
   const handleCreate = () => {
-    setClienteConsultado(null);
-    setClientes(null);
+    setConsultado(null);
     fetch(`${url}/clientes/crear`, {
       method: 'POST',
       headers: {
@@ -56,19 +55,17 @@ function App() {
     .then(data => {
       setClientes([...clientes]);
       console.log(data)
-     
-      setMensaje('Se creó el cliente correctamente');
+      toast.success("Se creó el cliente correctamente")
     })
     .catch(error => {
       console.error('Error al crear el cliente:', error);
-      setMensaje("Error al crear cliente, mensaje de error :'El cliente Ya Existe!..");
+      toast.error("Error al crear cliente, mensaje de error :'El cliente Ya Existe!..")
     });
   }
 
   const handleUpdate = () => {
     const clienteId = "010101010";
     setConsultado(null);
-    setClientes(null);
     fetch(`${url}/clientes/${clienteId}`, {
       method: 'PUT',
       headers: {
@@ -80,7 +77,7 @@ function App() {
       .then(response => {
         console.log(response)
         if (response.ok) {
-          setMensaje(`Se ha actualizado el cliente con cédula No ${clienteId}`);
+          toast.success(`Se ha actualizado el cliente con cédula No ${clienteId}`)
         } else {
           return response.text().then(errorMessage => {
             throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorMessage}`);
@@ -89,13 +86,12 @@ function App() {
       })
       .catch(error => {
         console.error('Error al actualizar el cliente:', error);
-        setMensaje(error.message);
+        toast.error('Error al actualizar el cliente: cliente no encontrado')
       });
   }
   
   const handleConsult = () => {
     const clienteId = "010101010";
-    console.log(clienteId)
     fetch(`${url}/clientes/${clienteId}`, {
       method: 'GET',
       headers: {
@@ -107,38 +103,54 @@ function App() {
     .then(data => {
       setClienteConsultado(data)
       setConsultado(true);
-      setMensaje('Se consultó el cliente correctamente')
+      toast.success('Se consultó el cliente correctamente')
     })
     .catch(error => {
       console.error('Error al consultar el cliente:', error)
-      setMensaje('Error al consultar el cliente')
+      toast.error('Error al consultar el cliente: cliente no encontrado')
     })
   }
   
   return (
     <>
       <Header />
-      <Button onClick={handleCreate} text="Crear cliente"/>
-      <Button onClick={handleUpdate} text="Actualizar cliente"/>
-      <Button onClick={handleConsult} text="Consultar cliente"/>
-      {consultado ? ( 
-        clienteConsultado?.map(cliente => ( 
-          <div key={cliente.id}>
-            <h2>Nombre: {cliente.nombre1}</h2>
-            <p>Correo: {cliente.correo}</p>
-            <p>Cédula: {cliente.cedula}</p>
-          </div>
-        ))
-      ) : (
-        clientes?.map(cliente => ( 
-          <div key={cliente.id}>
-            <h2>Nombre: {cliente.nombre}</h2>
-            <p>Correo: {cliente.correo}</p>
-            <p>Cédula: {cliente.cedula}</p>
-          </div>
-        ))
-      )}
-      <p>{mensaje}</p>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
+      <div className="containerButtons">
+        <Button onClick={handleCreate} text="Crear cliente"/>
+        <Button onClick={handleUpdate} text="Actualizar cliente"/>
+        <Button onClick={handleConsult} text="Consultar cliente"/>
+      </div>
+      <h1>Clientes</h1>
+      <div className="containerCard">
+        {consultado ? ( 
+          clienteConsultado?.map(cliente => ( 
+            <div key={cliente.id} className='card'>
+              <p>Nombre: <span>{cliente.nombre1}</span></p>
+              <p>Correo: <span>{cliente.correo}</span></p>
+              <p>Cédula: <span>{cliente.cedula}</span></p>
+            </div>
+          ))
+        ) : (
+          clientes?.map(cliente => ( 
+            <div key={cliente.id} className='card'>
+              <p>Nombre: <span>{cliente.nombre}</span></p>
+              <p>Correo: <span>{cliente.correo}</span></p>
+              <p>Cédula: <span>{cliente.cedula}</span></p>
+            </div>
+          ))
+        )}
+      </div>
     </>
   )
 }

@@ -37,6 +37,8 @@ Una vez que hayas instalado las dependencias puedes ejecutar el proyecto usando 
 
 ## Tecnologías Utilizadas
 
-- React V18.2: Biblioteca de JavaScript para la construcción de interfaces de usuario.
 - Vite: Herramienta de compilación rápida y sencilla para proyectos web.
+- React V18.2: Biblioteca de JavaScript para la construcción de interfaces de usuario.
+- Fetch: API para realizar peticiones HTTP.
 - SASS: Preprocesador de CSS.
+- React toastify: Librería para mostrar notificaciones.

@@ -3,7 +3,12 @@ import PropTypes from "prop-types"
 
 export const Button = ({ onClick, text}) => {
   return (
-    <button onClick={onClick}>{text}</button>
+    <button 
+      className="button"
+      onClick={onClick}
+    >
+      {text}
+    </button>
   )
 }
 

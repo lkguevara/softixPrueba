@@ -1,5 +1,5 @@
 const cliente = {
-    "Cedula": "852000444",
+    "Cedula": "999874",
     "Tipodocumento":"CC",
     "Nombre1":"Sebastian",
     "Nombre2":"Fernando",

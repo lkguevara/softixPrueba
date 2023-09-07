@@ -1,3 +1,17 @@
-.button{
-    
+.button { 
+    background-color: #1e9ab3;
+    border-radius: 8px;
+    border-style: none;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-size: 14px;
+    margin: 0;
+    outline: none;
+    padding: 8px;
+    text-align: center;
+
+
+    &:hover, &:focus {
+        background-color: #24adc9;
+    }
 }
