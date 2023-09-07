@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react'
 import { Button } from './components/Button/Button'
 import Header from './components/Header/Header'
-import './App.css'
+import './index.css'
 import useFetch from './hooks/useFetch'
 import cliente from './utils/clients'
 import clienteActualizado from './utils/clienteActualizado'
